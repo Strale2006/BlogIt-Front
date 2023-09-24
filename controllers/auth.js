@@ -45,18 +45,17 @@ exports.login = async (req, res, next) =>{
 
 }
 
-exports.forgotPassword = async (req, res, next) =>{
+exports.forgotPassword = async (req, res, next) => {
     const {email} = req.body;
 
     try {
         const user = await User.findOne({email});
 
-        if (!user){
+        if (!user) {
             return next(new ErrorResponse("Email could not be sent", 404));
         }
 
         const resetToken = user.getResetPasswordToken();
-
         await user.save();
 
         const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
@@ -65,7 +64,7 @@ exports.forgotPassword = async (req, res, next) =>{
             <h1> You have requested a new password reset</h1>
             <p> Please go to this link to reset your password</p>
             <a href=${resetUrl} clicktracking=off>${resetUrl}</a> 
-        `
+        `;
 
         try {
             await sendEmail({
@@ -75,9 +74,8 @@ exports.forgotPassword = async (req, res, next) =>{
             });
 
             res.status(200).json({success: true, data: "Email sent"});
-        }catch (e){
-
-            console.log(e);
+        } catch (emailError) {
+            console.error(emailError);
 
             user.resetPasswordToken = undefined;
             user.resetPasswordExpire = undefined;
@@ -86,49 +84,55 @@ exports.forgotPassword = async (req, res, next) =>{
 
             return next(new ErrorResponse("Email could not be sent", 500));
         }
-    }catch (e) {
-        next(e);
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
-}
+};
+
 
 exports.resetPassword = async (req, res, next) => {
-
-    const resetPasswordToken = crypto
-        .createHash("sha256")
-        .update(req.params.resetToken)
-        .digest("hex");
+    const resetPasswordToken = req.params.resetToken
 
     console.log("Hashed Token from URL:", resetPasswordToken);
 
     try {
+        const timestamp = Date.now();
+        const dateObject = new Date(timestamp);
 
-        const user = await User.findOne({
-            resetPasswordToken,
-            resetPasswordExpire: { $gt: Date.now() },
-        });
+        console.log("Timestamp:", timestamp);
+        console.log("Date Object:", dateObject);
+        console.log("Reset Password Token:", resetPasswordToken);
 
+        let userCheck = await User.findById("64de27cd210fd4a3839462ab")
+        console.log(userCheck.resetPasswordToken + " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
+        const user = await User.findOne({ "resetPasswordToken": resetPasswordToken });
         console.log("User Found:", user);
 
         if (!user) {
             return next(new ErrorResponse("Invalid Reset Token", 400));
         }
 
+        // The following lines shouldn't be reached if the user is null
         user.password = req.body.password;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
 
         await user.save();
-
         console.log("Password Reset Successful:", user);
 
         res.status(201).json({
             success: true,
-            data:"Password Reset Success",
+            data: "Password Reset Success",
             token: user.getSignToken(),
         });
-    }catch (e) {
+    } catch (e) {
+        console.error('An error occurred:', e); // Log the error for debugging
         next(e);
     }
+
+
 }
 
 const sendToken = (user, statusCode, res)=>{

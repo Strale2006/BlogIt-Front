@@ -23,8 +23,8 @@ const UserSchema = new mongoose.Schema({
        minLength: 6,
        select: false
    },
-   resetPasswordToken: String,
-   resetPasswordExpire: Date
+    resetPasswordToken: String,
+    resetPasswordExpire: Date
 });
 
 UserSchema.pre("save", async function(next){
@@ -51,14 +51,8 @@ UserSchema.methods.getSignToken = function (){
 UserSchema.methods.getResetPasswordToken = function() {
     const resetToken = crypto.randomBytes(20).toString("hex");
 
-    //Hash token and save to db
+    this.resetPasswordToken = resetToken
 
-    this.resetPasswordToken = crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
-
-    //Set token expire date
     this.resetPasswordExpire = Date.now() + 10* (60 * 1000);
 
     return resetToken;
