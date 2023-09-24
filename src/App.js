@@ -15,11 +15,13 @@ const App = () => {
     <Router>
         <div className="app">
             <Routes>
-                <Route path="/" element={<PrivateRoute element={<PrivateScreen />} />} />
+                <Route path="/" element={<PrivateRoute/>}>
+                    <Route path="/" element={<PrivateScreen />}/>
+                </Route>
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/register" element={<RegisterScreen />} />
                 <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
-                <Route path="/passwordreset/:resetToken" element={ResetPasswordScreen} />
+                <Route path="/passwordreset/:resetToken" element={< ResetPasswordScreen />} />
             </Routes>
         </div>
     </Router>

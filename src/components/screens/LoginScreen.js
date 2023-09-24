@@ -6,7 +6,7 @@ import "./LoginScreen.css";
 
 const LoginScreen = () => {
 
-    let history = useNavigate();
+    const history = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ const LoginScreen = () => {
         e.preventDefault();
 
         const config = {
-            header: {
+            headers: {
                 "Content-Type": "application/json"
             }
         }

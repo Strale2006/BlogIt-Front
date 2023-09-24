@@ -1,9 +1,10 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./RegisterScreen.css";
 
-const RegisterScreen = ({history}) => {
+const RegisterScreen = () => {
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -12,42 +13,42 @@ const RegisterScreen = ({history}) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (localStorage.getItem("authToken")){
-            history.push("/");
+        if (localStorage.getItem("authToken")) {
+            navigate("/");
         }
-    }, [history]);
+    }, [navigate]);
 
     const registerHandler = async (e) => {
         e.preventDefault();
 
         const config = {
-            header: {
+            headers: {
                 "Content-Type": "application/json"
             }
-        }
+        };
 
-        if (password !== confirmPassword){
+        if (password !== confirmPassword) {
             setPassword("");
             setConfirmPassword("");
             setTimeout(() => {
                 setError("");
             }, 5000);
-            return setError("Passwords do not match")
+            return setError("Passwords do not match");
         }
 
         try {
-            const {data} = await axios.post("/api/auth/register", {username, email, password}, config);
+            const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
 
             localStorage.setItem("authToken", data.token);
 
-            history.push("/")
-        }catch (e){
+            navigate("/");
+        } catch (e) {
             setError(e.response.data.error);
-            setTimeout(()=>{
+            setTimeout(() => {
                 setError("");
-            }, 5000)
+            }, 5000);
         }
-    }
+    };
 
     return (
         <div className="register-screen">
@@ -56,19 +57,19 @@ const RegisterScreen = ({history}) => {
                 {error && <span className="error-message">{error}</span>}
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
-                    <input type="text" required id="name" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <input type="text" required id="name" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <input type="email" required id="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="email" required id="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password:</label>
-                    <input type="password" required id="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="password" required id="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="confirmpassword">Confirm Password:</label>
-                    <input type="password" required id="confirmpassword" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                    <input type="password" required id="confirmpassword" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Register</button>
@@ -76,13 +77,9 @@ const RegisterScreen = ({history}) => {
                 <span className="register-screen__subtext">
                     Already have an account? <Link to="/login">Login</Link>
                 </span>
-
-
-
             </form>
         </div>
-    )
-
+    );
 };
 
 export default RegisterScreen;

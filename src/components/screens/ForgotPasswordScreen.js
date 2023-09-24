@@ -11,7 +11,7 @@ const ForgotPasswordScreen = () => {
         e.preventDefault();
 
         const config = {
-            header: {
+            headers: {
                 "Content-Type": "application/json",
             },
         };
@@ -34,11 +34,8 @@ const ForgotPasswordScreen = () => {
     };
 
     return (
-        <div className="forgotpassword-screen">
-            <form
-                onSubmit={forgotPasswordHandler}
-                className="forgotpassword-screen__form"
-            >
+        <div className={"forgotpassword-screen"}>
+            <form onSubmit={forgotPasswordHandler} className="forgotpassword-screen__form">
                 <h3 className="forgotpassword-screen__title">Forgot Password</h3>
                 {error && <span className="error-message">{error}</span>}
                 {success && <span className="success-message">{success}</span>}

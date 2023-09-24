@@ -1,0 +1,86 @@
+.private-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #4e6ee5; /* Background color for the entire page */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.private-screen__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 630px;
+    height: 650px;
+    border-radius: 15px;
+    background-color: white;
+    color: #353a48;
+    padding: 20px;
+    text-align: center;
+}
+
+.private-screen__title{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.private-screen__subtext{
+    color: #636c83;
+    margin: 15px 0;
+}
+
+.private-screen__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+}
+
+.private-screen__logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #132b91; /* Verification button background color */
+    color: #fff; /* Verification button text color */
+    border: none;
+    padding: 10px 20px;
+    width: 280px;
+    height: 65px;
+    border-radius: 20px;
+    font-size: 23px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.private-screen__logout-button:hover{
+    border-radius: 25px;
+    background-color: #0c217a;
+}
+
+.private-screen__logo{
+    width: 300px;
+    height: 220px;
+}
+
+.verification-button {
+    background-color: #4d7af7; /* Verification button background color */
+    color: #fff; /* Verification button text color */
+    border: none;
+    width: 220px;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.verification-button:hover {
+    background-color: #345dce; /* Hover color for the verification button */
+    border-radius: 15px;
+}
