@@ -3,6 +3,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 
+
 exports.register = async (req, res, next) =>{
     const {username, email, password} = req.body;
 
@@ -61,9 +62,26 @@ exports.forgotPassword = async (req, res, next) => {
         const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
 
         const message = `
-            <h1> You have requested a new password reset</h1>
-            <p> Please go to this link to reset your password</p>
-            <a href=${resetUrl} clicktracking=off>${resetUrl}</a> 
+            <div style="display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 100vh;
+                        background: radial-gradient(ellipse at bottom, #1B2735 0%, #12141d 100%);
+                        font-size: 20px;
+                        color:#ffeba7">
+                <h1> You have requested a new password reset</h1>
+                <p> Please go to this link to reset your password</p>
+                <button style="background-color: #ffeba7;
+                                border-radius: 5px;
+                                width: 175px;
+                                height: 35px;
+                                border: none;
+                                outline: none;
+                                font-weight: 700;
+                                color: #333333;"><a href=${resetUrl}>Reset Password</a></button>
+            </div>
         `;
 
         try {
