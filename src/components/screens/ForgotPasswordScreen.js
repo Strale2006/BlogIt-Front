@@ -42,7 +42,7 @@ const ForgotPasswordScreen = () => {
                 <div className="form-group">
                     <p className="forgotpassword-screen__subtext">
                         Please enter the email address you register your account with. We
-                        will send you reset password confirmation to this email
+                        will send you reset password confirmation to this email.
                     </p>
                     <label htmlFor="email">Email:</label>
                     <input
@@ -54,7 +54,7 @@ const ForgotPasswordScreen = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary send-email__btn">
                     Send Email
                 </button>
             </form>

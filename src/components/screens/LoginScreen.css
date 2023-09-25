@@ -1,16 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
 .login-screen {
+    font-family: 'Poppins', sans-serif;
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #12141d 100%);
+    color: #ffeba7;
 }
 
-.login-screen__form {
+.login-screen_form {
+    display: flex;
+    flex-direction: column;
     width: 380px;
     padding: 1.5rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-    background: #fff;
+    background-color: #2b2e38;
+    align-items: center;
+    border-radius: 5px;
 }
 
 .login-screen__title {
@@ -23,7 +32,23 @@
 }
 
 .login-screen__subtext {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     display: block;
     margin: 0.5rem 0;
+    color: #ffeba7;
+}
+
+.login-button{
+    background-color: #ffeba7;
+    border-radius: 5px;
+    width: 100px;
+    height: 35px;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    color: #333333;
+}
+
+.subtext-link{
+    color: #ffeba7;
 }

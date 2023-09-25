@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
 * {
     margin: 0;
     padding: 0;
@@ -26,9 +28,11 @@ body {
     padding: 10px 20px;
     border: none;
     border-bottom: 3px solid transparent;
-    background-color: #eee;
+    background-color: #1f2029;
+    color: #56575a;
     outline-width: 0;
     font-size: 1rem;
+    border-radius: 7px;
 }
 
 .form-group input:focus {
@@ -53,21 +57,25 @@ body {
 }
 
 .error-message {
+    font-family: 'Poppins', sans-serif;
     width: 100%;
     display: inline-block;
     padding: 5px;
-    background: red;
-    color: #fff;
+    background: #1d1e26;
+    color: #7c7d81;
     text-align: center;
     margin: 0.5rem 0;
+    border-radius: 10px;
 }
 
 .success-message {
+    font-family: 'Poppins', sans-serif;
     width: 100%;
     display: inline-block;
     padding: 5px;
-    background: green;
-    color: #fff;
+    background: #1d1e26;
+    color: #7c7d81;
     text-align: center;
     margin: 0.5rem 0;
+    border-radius: 10px;
 }

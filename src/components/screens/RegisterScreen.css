@@ -1,16 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
+*{
+    color: #ffeba7;
+    font-family: 'Poppins', sans-serif;
+}
+
 .register-screen {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #12141d 100%);
 }
 
 .register-screen__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 380px;
     padding: 1.5rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-    background: #fff;
+    background: #2b2e38;
 }
 
 .register-screen__title {
@@ -19,7 +30,19 @@
 }
 
 .register-screen__subtext {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     display: block;
     margin: 0.5rem 0;
+}
+
+.register-btn{
+    display: flex;
+    background-color: #ffeba7;
+    color: #333333;
+    font-weight: 700;
+    width: 100px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
 }

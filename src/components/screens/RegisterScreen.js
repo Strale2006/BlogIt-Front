@@ -53,7 +53,7 @@ const RegisterScreen = () => {
     return (
         <div className="register-screen">
             <form onSubmit={registerHandler} className="register-screen__form">
-                <h3 className="register-screen__title">Register</h3>
+                <h3 className="register-screen__title">Sign Up</h3>
                 {error && <span className="error-message">{error}</span>}
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
@@ -72,7 +72,7 @@ const RegisterScreen = () => {
                     <input type="password" required id="confirmpassword" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Register</button>
+                <button type="submit" className="btn btn-primary register-btn">Register</button>
 
                 <span className="register-screen__subtext">
                     Already have an account? <Link to="/login">Login</Link>

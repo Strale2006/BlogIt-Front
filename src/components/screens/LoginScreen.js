@@ -50,24 +50,27 @@ const LoginScreen = () => {
 
     return (
         <div className="login-screen">
-            <form onSubmit={loginHandler} className="login-screen__form">
-                <h3 className="login-screen__title">Login</h3>
+            <form onSubmit={loginHandler} className="login-screen_form">
+                <h3 className="login-screen__title">Log In</h3>
                 {error && <span className="error-message">{error}</span>}
 
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <input type="email" required id="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input className="login--input" type="email" required id="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="password">Password:</label>
-                    <input type="password" required id="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input className="login-input" type="password" required id="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <span className="login-screen__subtext">
+                         <Link className="subtext-link" to="/forgotpassword">Forgot Password?</Link>
+                    </span>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="submit" className="login-button">LOGIN</button>
 
                 <span className="login-screen__subtext">
-                    Don't have an account? <Link to="/register">Register</Link>
+                    Don't have an account? <Link className="subtext-link" to="/register">Register</Link>
                 </span>
 
             </form>

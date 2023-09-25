@@ -87,7 +87,7 @@ const ResetPasswordScreen = ({ match }) => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary reset-pass__btn">
                     Reset Password
                 </button>
             </form>
