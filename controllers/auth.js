@@ -62,26 +62,57 @@ exports.forgotPassword = async (req, res, next) => {
         const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
 
         const message = `
-            <div style="display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        width: 100%;
-                        height: 100vh;
-                        background: radial-gradient(ellipse at bottom, #1B2735 0%, #12141d 100%);
-                        font-size: 20px;
-                        color:#ffeba7">
-                <h1> You have requested a new password reset</h1>
-                <p> Please go to this link to reset your password</p>
-                <button style="background-color: #ffeba7;
-                                border-radius: 5px;
-                                width: 175px;
-                                height: 35px;
-                                border: none;
-                                outline: none;
-                                font-weight: 700;
-                                color: #333333;"><a href=${resetUrl}>Reset Password</a></button>
-            </div>
+                            <!DOCTYPE html>
+                              <html lang="en">
+                              <head>
+                                  <meta charset="UTF-8">
+                                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                  <title>Email Template</title>
+                                  <style>
+                                      /* Reset some default styles for email clients */
+                                      body, div, p, h1, a {
+                                          margin: 0;
+                                          padding: 0;
+                                      }
+                            
+                                      /* Set a background color and text color for the email */
+                                      body {
+                                          background-color: #f0f0f0;
+                                          color: #333;
+                                          font-family: 'Poppins', sans-serif;
+                                      }
+                            
+                                      /* Add margin to create spacing between elements */
+                                      .email-content {
+                                          margin: 50px; /* Adjust this value to control the spacing */
+                                      }
+                                  </style>
+                                  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900" rel="stylesheet">
+                              </head>
+                              <body>
+                                  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                          <td align="center" valign="top">
+                                              <table role="presentation" width="1200" border="0" cellspacing="0" cellpadding="0" class="email-content">
+                                                  <tr>
+                                                      <td align="center" valign="top" style="background: radial-gradient(ellipse at bottom, #1B2735 0%, #12141d 100%); padding: 40px;">
+                                                          <h1 style="font-size: 30px; color: #ffeba7;">You have requested a new password reset</h1>
+                                                          <p style="font-size: 20px; color: #ffeba7;">Please go to this link to reset your password:</p>
+                                                          <p style="margin-top: 25px;">
+                                                              <a href="${resetUrl}" style="text-decoration: none;">
+                                                                  <button style="background-color: #ffeba7; border: none; border-radius: 25px; padding: 15px 30px; font-size: 18px; font-weight: bold; color: #333; cursor: pointer;">
+                                                                      Reset Password
+                                                                  </button>
+                                                              </a>
+                                                          </p>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </body>
+                              </html>
         `;
 
         try {
