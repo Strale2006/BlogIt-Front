@@ -29,7 +29,7 @@ const PrivateScreen = () =>{
 
             try {
                 const {data} = await axios.get("/api/private", config);
-                setPrivateData(data.data);
+                setPrivateData(data);
             }catch (e) {
                 localStorage.removeItem("authToken");
                 setError("You are not authorized, please login");
@@ -47,19 +47,23 @@ const PrivateScreen = () =>{
     }
 
     return (
-        <div className={`private-screen ${error ? "error" : ""}`}>
-            <div className="private-screen__header">
-                <img src="/SentMail.png" className="private-screen__logo" alt="Sent Mail"/>
-                <h1 className="private-screen__title">Verify your email address</h1>
-                <h4 className="private-screen__subtext">Please verify this email address by clicking the button below</h4>
-                <button className="verification-button">Verify your email</button>
-            </div>
+        <div className="verification-screen">
+            <form className="verification-screen_form">
+                {error && <span className="error-message">{error}</span>}
+                <img src="/SentMail.png" className="verification-screen__logo" alt="Sent Mail"/>
+                <h3 className="verification-screen__title">Hi, {privateData.username}</h3>
+                <h3 className="verification-screen__title">Verify your email address</h3>
+                <span className="verification-screen__subtext">Please verify this email address by clicking the button below</span>
 
-            <div className="private-screen__footer">
-                <button onClick={logoutHandler} className="private-screen__logout-button">
-                     Logout
-                </button>
-            </div>
+
+
+                <button type="submit" className="verification-button">Verify your email</button>
+
+                <span className="verification-screen__subtext">
+                    <button onClick={logoutHandler} className="subtext-link">Logout</button>
+                </span>
+
+            </form>
         </div>
     );
 };
