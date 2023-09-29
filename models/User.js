@@ -24,7 +24,12 @@ const UserSchema = new mongoose.Schema({
        select: false
    },
     resetPasswordToken: String,
-    resetPasswordExpire: Date
+    resetPasswordExpire: Date,
+    verificationToken: String,
+    isVerified: {
+       type: Boolean,
+       default: false
+    }
 });
 
 UserSchema.pre("save", async function(next){
@@ -56,6 +61,14 @@ UserSchema.methods.getResetPasswordToken = function() {
     this.resetPasswordExpire = Date.now() + 10* (60 * 1000);
 
     return resetToken;
+}
+
+UserSchema.methods.getVerificationToken = function() {
+    const verificationToken = crypto.randomBytes(20).toString("hex");
+
+    this.verificationToken = verificationToken;
+
+    return verificationToken;
 }
 
 const User = mongoose.model("User", UserSchema);

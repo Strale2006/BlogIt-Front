@@ -184,6 +184,58 @@ exports.resetPassword = async (req, res, next) => {
 
 }
 
+exports.sendVerificationEmail = async (req, res, next) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        }
+
+        const verificationToken = user.getVerificationToken();
+        await user.save();
+
+        const verificationUrl = `http://localhost:3000/verifyEmail/${verificationToken}`;
+
+        const message = `Please verify your email by clicking on this link: ${verificationUrl}`;
+
+        await sendEmail({
+            to: user.email,
+            subject: "Email Verification - HaD",
+            text: message,
+        });
+
+        res.status(200).json({ success: true, data: "Email sent" });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+
+exports.verifyEmail = async (req, res, next) => {
+    const verificationToken = req.params.verificationToken;
+
+    try {
+        const user = await User.findOne({ verificationToken });
+
+        if (!user) {
+            return next(new ErrorResponse("Invalid Verification Token", 400));
+        }
+
+        user.isVerified = true;
+        user.verificationToken = undefined;
+
+        await user.save();
+
+        res.status(200).json({ success: true, data: "Email Verified" });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+
 const sendToken = (user, statusCode, res)=>{
     const token = user.getSignToken();
 
