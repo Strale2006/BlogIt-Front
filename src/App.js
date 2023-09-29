@@ -9,6 +9,8 @@ import LoginScreen from './components/screens/LoginScreen'
 import RegisterScreen from './components/screens/RegisterScreen'
 import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen'
 import ResetPasswordScreen from './components/screens/ResetPasswordScreen'
+import SendVerificationEmail from './components/screens/SendVerificationEmail'
+import VerifyEmail from './components/screens/VerifyEmail'
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
                 <Route path="/register" element={<RegisterScreen />} />
                 <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
                 <Route path="/passwordreset/:resetToken" element={< ResetPasswordScreen />} />
+                <Route path="/sendVerificationEmail" element={<SendVerificationEmail />} />
+                <Route path="/verifyEmail/:verificationToken" element={< VerifyEmail />} />
             </Routes>
         </div>
     </Router>
