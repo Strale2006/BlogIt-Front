@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
-import '../../index.css';
+import './SendVerificationEmail.css';
 import axios from 'axios';
 
 function SendVerificationEmail() {
@@ -44,13 +44,13 @@ function SendVerificationEmail() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth//sendVerificationEmail', { email });
+      await axios.post('http://localhost:3000/api/auth/sendVerificationEmail', { email });
       alert('Email sent');
     } catch (error) {
       console.error(error);
       if (error.response) {
         // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
+        // that falls out of the range of 2x
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);

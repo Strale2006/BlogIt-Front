@@ -8,7 +8,7 @@ function VerifyEmail() {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        await axios.get(`/verifyEmail/${verificationToken}`);
+        await axios.get(`http://localhost:3000/api/auth/verifyEmail/${verificationToken}`);
         alert('Email verified');
       } catch (error) {
         console.error(error);
@@ -16,7 +16,7 @@ function VerifyEmail() {
       }
     };
 
-    verifyEmail();
+    verifyEmail().then(r => console.log(r));
   }, [verificationToken]);
 
   return <div>Email verification in progress...</div>;
