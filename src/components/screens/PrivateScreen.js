@@ -8,8 +8,6 @@ import '../../index.css'
 
 const PrivateScreen = () =>{
 
-    console.log("PrivateScreen is rendered");
-
     const history = useNavigate();
 
     const [error, setError] = useState("");
@@ -32,17 +30,32 @@ const PrivateScreen = () =>{
         setTaskTitle(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        setTasks([...tasks, taskTitle]);
+        const newTasks = [...tasks, taskTitle];
+        setTasks(newTasks);
         setTaskTitle("");
         closeModal();
+
+        //Dodavanje taska u bazu
+        try {
+            await axios.put('/api/auth/tasks', { userId: privateData.id, tasks: newTasks });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const handleDelete = (index) => {
+    const handleDelete = async (index) => {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
         setTasks(newTasks);
+
+        //Brisanje taska iz baze
+        try {
+            await axios.put('/api/auth/tasks', { userId: privateData.id, tasks: newTasks });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
@@ -63,7 +76,16 @@ const PrivateScreen = () =>{
                 const {data} = await axios.get("/api/private", config);
                 setPrivateData(data);
                 setIsVerified(data.isVerified);
-                console.log(data.isVerified);
+
+                const taskData = await axios.get(`/api/auth/tasks/${data.id}`);
+                console.log(taskData)
+
+                if (taskData.data && Array.isArray(taskData.data.data)) {
+                    setTasks(taskData.data.data);
+                } else {
+                    console.error('Tasks data is not an array:', taskData);
+                    setTasks([]); // Postavite tasks na prazan niz
+                }
             }catch (e) {
                 localStorage.removeItem("authToken");
                 setError("You are not authorized, please login");
@@ -95,13 +117,14 @@ const PrivateScreen = () =>{
             <h2 className="verification-screen__title">Hi, {privateData.username}</h2>
 
             <div className="content">
-
                 <div className="header">
                     <h1>TO-DO</h1>
                 </div>
                 <div className="task-container">
-
-                    {tasks.map((task, index) => (
+                {tasks.length === 0 ? (
+                    <p>No tasks found.</p>
+                ) : (
+                    tasks.map((task, index) => (
                         <div className='task' key={index}>
                             <h1>{task}</h1>
                             <lord-icon
@@ -114,8 +137,8 @@ const PrivateScreen = () =>{
                                 onClick={() => handleDelete(index)}>
                             </lord-icon>
                         </div>
-                    ))}
-
+                    ))
+                )}
                 </div>
 
                 <button className='new-btn'>
