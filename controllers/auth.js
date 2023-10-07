@@ -236,6 +236,50 @@ exports.verifyEmail = async (req, res, next) => {
     }
 };
 
+exports.updateUserTasks = async (req, res, next) => {
+    const { userId, tasks } = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(userId, { tasks }, { new: true });
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+exports.getUserTasks = async (req, res, next) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+        res.status(200).json({ success: true, data: user.tasks });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+exports.getPrivateRoute = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'No user found' });
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            username: user.username, 
+            id: user.id,
+            tasks: user.tasks, // Dodajte ovo
+            data: "You got access to the private data in this route" 
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server error' });
+    }
+};
+
 const sendToken = (user, statusCode, res)=>{
     const token = user.getSignToken();
 

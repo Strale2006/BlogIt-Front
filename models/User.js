@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     isVerified: {
        type: Boolean,
        default: false
+    },
+    tasks: {
+        type: [String], // Tip je niz stringova
+        default: [] // Podrazumevana vrednost je prazan niz
     }
 });
 
