@@ -8,7 +8,12 @@ exports.getPrivateRoute = async (req, res, next) => {
             return res.status(404).json({ success: false, error: 'No user found' });
         }
 
-        res.status(200).json({ success: true, username: user.username, id: user.id,
+        res.status(200).json({ 
+            success: true, 
+            username: user.username, 
+            id: user.id,
+            isVerified: user.isVerified,
+            tasks: user.tasks,
             data: "You got access to the private data in this route" });
 
     } catch (error) {
