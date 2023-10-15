@@ -17,6 +17,7 @@ const PrivateScreen = () =>{
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [tasks, setTasks] = useState([]);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -28,6 +29,12 @@ const PrivateScreen = () =>{
 
     const handleInputChange = (event) => {
         setTaskTitle(event.target.value);
+    };
+
+
+
+    const handleProfileClick = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
 
     const handleSubmit = async (event) => {
@@ -80,7 +87,7 @@ const PrivateScreen = () =>{
                 const taskData = await axios.get(`/api/auth/tasks/${data.id}`);
                 console.log(taskData)
 
-                if (taskData.data && Array.isArray(taskData.data.data)) {
+                if (Array.isArray(taskData.data.data)) {
                     setTasks(taskData.data.data);
                 } else {
                     console.error('Tasks data is not an array:', taskData);
@@ -112,9 +119,25 @@ const PrivateScreen = () =>{
             {error && <span className="error-message">{error}</span>}
             {isVerified===false && <span className="error-message">Please verify your email. <Link to="/sendVerificationEmail">Send verification email</Link></span>}
 
+            <div className="content-header">
+                <h1>Website To-Do</h1>
+                <div className="user-profile">
+                    <h2 className="verification-screen_title">Hi, {privateData.username} </h2>
+                    <div className="profile" onClick={handleProfileClick}>
+                        <div className="pfp-holder">
+                            <div className="pfp"></div>
+                        </div>
 
-            <h1>Website To-Do</h1>
-            <h2 className="verification-screen__title">Hi, {privateData.username}</h2>
+                        {isMenuOpen && (
+                            <div className={`dropdown-menu ${isMenuOpen ? 'show' : ''}`}>
+                                <a>Profile</a>
+                                <a onClick={logoutHandler}>Log Out</a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+
 
             <div className="content">
                 <div className="header">
@@ -122,7 +145,7 @@ const PrivateScreen = () =>{
                 </div>
                 <div className="task-container">
                 {tasks.length === 0 ? (
-                    <p>No tasks found.</p>
+                    <span className="no-tasks">No tasks found.</span>
                 ) : (
                     tasks.map((task, index) => (
                         <div className='task' key={index}>
@@ -158,10 +181,6 @@ const PrivateScreen = () =>{
 
                     </div>
                 )}
-
-
-
-                <h3 className='logout-btn' onClick={logoutHandler}>Log Out</h3>
             </div>
 
         </div>
