@@ -12,6 +12,8 @@ import ResetPasswordScreen from './components/screens/ResetPasswordScreen'
 import SendVerificationEmail from './components/screens/SendVerificationEmail'
 import VerifyEmail from './components/screens/VerifyEmail'
 
+import Navbar from './components/NavBar/navbar'
+
 const App = () => {
   return (
     <Router>

@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import './PrivateScreen.css'
 import '../../index.css'
 
+import Navbar from '../NavBar/navbar'
 
 
 const PrivateScreen = () =>{
@@ -118,6 +119,8 @@ const PrivateScreen = () =>{
         <div className="to-do__screen">
             {error && <span className="error-message">{error}</span>}
             {isVerified===false && <span className="error-message">Please verify your email. <Link to="/sendVerificationEmail">Send verification email</Link></span>}
+
+            <Navbar></Navbar>
 
             <div className="content-header">
                 <h1>Website To-Do</h1>
