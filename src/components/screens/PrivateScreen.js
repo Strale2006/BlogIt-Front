@@ -4,6 +4,10 @@ import {Link, useNavigate} from "react-router-dom";
 import './PrivateScreen.css'
 import '../../index.css'
 
+import { useDispatch } from 'react-redux';
+import { clearUser } from '../../redux/actions';
+import { useSelector } from 'react-redux';
+
 
 
 const PrivateScreen = () =>{
@@ -18,6 +22,10 @@ const PrivateScreen = () =>{
     const [taskTitle, setTaskTitle] = useState("");
     const [tasks, setTasks] = useState([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const user = useSelector(state => state.user);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -106,6 +114,7 @@ const PrivateScreen = () =>{
 
     const logoutHandler = () => {
         localStorage.removeItem("authToken");
+        dispatch(clearUser());
         history("/login");
     }
 
@@ -122,7 +131,11 @@ const PrivateScreen = () =>{
             <div className="content-header">
                 <h1>Website To-Do</h1>
                 <div className="user-profile">
-                    <h2 className="verification-screen_title">Hi, {privateData.username} </h2>
+                    {user ? (
+                        <h2 className="verification-screen_title">Hi, {user.username}</h2>
+                    ) : (
+                        <p>Please log in to view this content.</p>
+                    )}
                     <div className="profile" onClick={handleProfileClick}>
                         <div className="pfp-holder">
                             <div className="pfp"></div>

@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import "./RegisterScreen.css";
 
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/actions';
+
+
 const RegisterScreen = () => {
     const navigate = useNavigate();
 
@@ -11,6 +15,10 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+
+    const dispatch = useDispatch();
+
+    
 
     useEffect(() => {
         if (localStorage.getItem("authToken")) {
@@ -38,8 +46,15 @@ const RegisterScreen = () => {
 
         try {
             const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
-
+            
+            dispatch(setUser({ 
+                username: data.username, 
+                password: data.password, 
+                email: data.email, 
+                tasks: data.tasks 
+            }));
             localStorage.setItem("authToken", data.token);
+            
 
             navigate("/");
         } catch (e) {
