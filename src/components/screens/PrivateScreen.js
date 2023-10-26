@@ -4,47 +4,33 @@ import {Link, useNavigate} from "react-router-dom";
 import './PrivateScreen.css'
 import '../../index.css'
 
-import { useDispatch } from 'react-redux';
-import { clearUser } from '../../redux/actions';
-import { useSelector } from 'react-redux';
+import Navbar from '../NavBar/navbar'
 
-
-
-const PrivateScreen = () =>{
+const PrivateScreen = (effect, deps) =>{
 
     const history = useNavigate();
 
     const [error, setError] = useState("");
     const [privateData, setPrivateData] = useState("");
     const [isVerified, setIsVerified] = useState(true);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [tasks, setTasks] = useState([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const dispatch = useDispatch();
-
-    const user = useSelector(state => state.user);
+    const [username, setUsername] = useState();
 
     const openModal = () => {
         setIsModalOpen(true);
     };
-
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
     const handleInputChange = (event) => {
         setTaskTitle(event.target.value);
     };
-
-
-
     const handleProfileClick = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const newTasks = [...tasks, taskTitle];
@@ -59,7 +45,6 @@ const PrivateScreen = () =>{
             console.error(error);
         }
     };
-
     const handleDelete = async (index) => {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
@@ -72,6 +57,10 @@ const PrivateScreen = () =>{
             console.error(error);
         }
     };
+    const logoutHandler = () => {
+        localStorage.removeItem("authToken");
+        history("/login");
+    }
 
     useEffect(() => {
         if(!localStorage.getItem("authToken")){
@@ -89,34 +78,31 @@ const PrivateScreen = () =>{
 
             try {
                 const {data} = await axios.get("/api/private", config);
+
                 setPrivateData(data);
                 setIsVerified(data.isVerified);
+                setUsername(data.username);
 
                 const taskData = await axios.get(`/api/auth/tasks/${data.id}`);
-                console.log(taskData)
 
                 if (Array.isArray(taskData.data.data)) {
                     setTasks(taskData.data.data);
                 } else {
                     console.error('Tasks data is not an array:', taskData);
-                    setTasks([]); // Postavite tasks na prazan niz
+                    setTasks([]);
                 }
             }catch (e) {
                 localStorage.removeItem("authToken");
                 setError("You are not authorized, please login");
             }
+
         }
 
         fetchPrivateData().then().catch(error => {
             console.log("Error:", error);
         });
-    }, [history]);
 
-    const logoutHandler = () => {
-        localStorage.removeItem("authToken");
-        dispatch(clearUser());
-        history("/login");
-    }
+    }, [history]);
 
     const lordIconStyle = {
         width: "30px",
@@ -128,14 +114,13 @@ const PrivateScreen = () =>{
             {error && <span className="error-message">{error}</span>}
             {isVerified===false && <span className="error-message">Please verify your email. <Link to="/sendVerificationEmail">Send verification email</Link></span>}
 
+            <Navbar></Navbar>
+
             <div className="content-header">
                 <h1>Website To-Do</h1>
                 <div className="user-profile">
-                    {user ? (
-                        <h2 className="verification-screen_title">Hi, {user.username}</h2>
-                    ) : (
-                        <p>Please log in to view this content.</p>
-                    )}
+                        <h2 className="verification-screen_title">Hi, {privateData.username}</h2>
+
                     <div className="profile" onClick={handleProfileClick}>
                         <div className="pfp-holder">
                             <div className="pfp"></div>
@@ -143,7 +128,7 @@ const PrivateScreen = () =>{
 
                         {isMenuOpen && (
                             <div className={`dropdown-menu ${isMenuOpen ? 'show' : ''}`}>
-                                <a>Profile</a>
+                                <a href="/profile">Profile</a>
                                 <a onClick={logoutHandler}>Log Out</a>
                             </div>
                         )}

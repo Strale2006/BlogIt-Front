@@ -21,9 +21,7 @@ const LoginScreen = () => {
 
 
     useEffect(() => {
-        if (localStorage.getItem("authToken")){
-            history("/");
-        }
+        
     }, [history]);
 
 
@@ -51,6 +49,7 @@ const LoginScreen = () => {
                 email: user.email,
                 tasks: user.tasks
             }));
+            localStorage.setItem('userData', JSON.stringify(data.user));
             localStorage.setItem("authToken", data.token);
             
 

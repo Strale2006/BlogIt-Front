@@ -11,6 +11,9 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen'
 import ResetPasswordScreen from './components/screens/ResetPasswordScreen'
 import SendVerificationEmail from './components/screens/SendVerificationEmail'
 import VerifyEmail from './components/screens/VerifyEmail'
+import ProfileScreen from './components/screens/ProfileScreen';
+
+import Navbar from './components/NavBar/navbar'
 
 const App = () => {
   return (
@@ -26,6 +29,7 @@ const App = () => {
                 <Route path="/passwordreset/:resetToken" element={< ResetPasswordScreen />} />
                 <Route path="/sendVerificationEmail" element={<SendVerificationEmail />} />
                 <Route path="/verifyEmail/:verificationToken" element={< VerifyEmail />} />
+                <Route path="/profile" element={< ProfileScreen />} />
             </Routes>
         </div>
     </Router>
