@@ -139,7 +139,6 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
-
 exports.resetPassword = async (req, res, next) => {
     const resetPasswordToken = req.params.resetToken
 
@@ -270,7 +269,7 @@ exports.getPrivateRoute = async (req, res, next) => {
             success: true, 
             username: user.username, 
             id: user.id,
-            tasks: user.tasks, // Dodajte ovo
+            tasks: user.tasks,
             data: "You got access to the private data in this route" 
         });
 
@@ -280,10 +279,29 @@ exports.getPrivateRoute = async (req, res, next) => {
     }
 };
 
+exports.getProfile = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'No user found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            username: user.username,
+            email: user.email,
+            tasks: user.tasks
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server error' });
+    }
+};
+
 const sendToken = (user, statusCode, res)=>{
     const token = user.getSignToken();
-
-    res.status(statusCode).json({success:true, token});
+    res.status(statusCode).json({success:true, token, user});
 }
 
 

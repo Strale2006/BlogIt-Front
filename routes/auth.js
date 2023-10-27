@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+const {protect} = require('../middleware/auth')
+
 const {register, login, forgotPassword, resetPassword, sendVerificationEmail,
-     verifyEmail, updateUserTasks, getUserTasks} = require('../controllers/auth');
+     verifyEmail, updateUserTasks, getUserTasks, getProfile} = require('../controllers/auth');
 
 router.route("/register").post(register);
 
@@ -19,6 +21,8 @@ router.route("/verifyEmail/:verificationToken").get(verifyEmail);
 router.route("/tasks/:userId").get(getUserTasks);
 
 router.route("/tasks").put(updateUserTasks);
+
+router.route("/profile").get(getProfile);
 
 
 module.exports = router;

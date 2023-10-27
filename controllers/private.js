@@ -10,7 +10,8 @@ exports.getPrivateRoute = async (req, res, next) => {
 
         res.status(200).json({ 
             success: true, 
-            username: user.username, 
+            username: user.username,
+            email: user.email,
             id: user.id,
             isVerified: user.isVerified,
             tasks: user.tasks,
