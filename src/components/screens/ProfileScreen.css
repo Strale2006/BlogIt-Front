@@ -1,0 +1,29 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    padding-top: 50px; /* Dodajte malo prostora na vrhu */
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 800px;
+}
+
+.profile-title {
+    width: 100%;
+    text-align: center;
+}
+
+.profile-info,
+.profile-change {
+    width: 55%;
+}
+
+.information{
+    display: flex;
+}
