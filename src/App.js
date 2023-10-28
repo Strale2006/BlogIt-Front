@@ -12,24 +12,28 @@ import ResetPasswordScreen from './components/screens/ResetPasswordScreen'
 import SendVerificationEmail from './components/screens/SendVerificationEmail'
 import VerifyEmail from './components/screens/VerifyEmail'
 
+import Room from './chat/pages/Room'
+import { AuthProvider } from './chat/utils/AuthContext'
+
 const App = () => {
-  return (
-    <Router>
-        <div className="app">
-            <Routes>
-                <Route path="/" element={<PrivateRoute/>}>
-                    <Route path="/" element={<PrivateScreen />}/>
-                </Route>
-                <Route path="/login" element={<LoginScreen />} />
-                <Route path="/register" element={<RegisterScreen />} />
-                <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
-                <Route path="/passwordreset/:resetToken" element={< ResetPasswordScreen />} />
-                <Route path="/sendVerificationEmail" element={<SendVerificationEmail />} />
-                <Route path="/verifyEmail/:verificationToken" element={< VerifyEmail />} />
-            </Routes>
-        </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="app">
+                <Routes>
+                    <Route element={<PrivateRoute/>}>
+                        <Route element={<PrivateScreen />}/>
+                    </Route>
+                    <Route path="/login" element={<LoginScreen />} />
+                    <Route path="/register" element={<RegisterScreen />} />
+                    <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
+                    <Route path="/passwordreset/:resetToken" element={< ResetPasswordScreen />} />
+                    <Route path="/sendVerificationEmail" element={<SendVerificationEmail />} />
+                    <Route path="/verifyEmail/:verificationToken" element={< VerifyEmail />} />
+                    <Route path="/room" element={<Room />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
