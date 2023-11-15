@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./ForgotPasswordScreen.css";
+import {Link} from "react-router-dom";
 
 const ForgotPasswordScreen = () => {
     const [email, setEmail] = useState("");
@@ -32,34 +33,48 @@ const ForgotPasswordScreen = () => {
             }, 5000);
         }
     };
-
     return (
-        <div className={"forgotpassword-screen"}>
-            <form onSubmit={forgotPasswordHandler} className="forgotpassword-screen__form">
-                <h3 className="forgotpassword-screen__title">Forgot Password</h3>
-                {error && <span className="error-message">{error}</span>}
-                {success && <span className="success-message">{success}</span>}
-                <div className="form-group">
-                    <p className="forgotpassword-screen__subtext">
-                        Please enter the email address you register your account with. We
-                        will send you reset password confirmation to this email.
-                    </p>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        required
-                        id="email"
-                        placeholder="Email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+        <div className="forgot-password-screen">
+            <div className="forgot-password-screen-bg">
+                <div className="forgot-password-form">
+                    <div className="forgot-password-form-header">
+                        <img className="blogit-png" src="/BlogIt.png" alt=""/>
+                        <h2>BlogIt</h2>
+                    </div>
+                    <div className="forgot-password-form-middle">
+                        <h2>Forgot Password</h2>
+
+                        <form onSubmit={forgotPasswordHandler}>
+                            {error && <span className="error-message">{error}</span>}
+                            {success && <span className="success-message">{success}</span>}
+                            <div className="form-group">
+                                <label>Email:</label>
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <button className="forgot-password-button" type="submit">Send Email</button>
+                            <h4 className="forgot-password-no-account">Don't have an account? <span className="register-link"><Link to="/register">Register</Link></span></h4>
+                            <h4 className="forgot-password-no-account">Remembered password? <span className="register-link"><Link to="/login">Login</Link></span></h4>
+                        </form>
+                    </div>
+                    <div className="forgot-password-form-footer">
+                        <h4>@BlogIt2023</h4>
+                        <h4>straleisara@gmail.com</h4>
+                    </div>
                 </div>
-                <button type="submit" className="btn btn-primary send-email__btn">
-                    Send Email
-                </button>
-            </form>
+                <div className="forgot-password-picture">
+                    <img className="blogging-img" src="/BloggingImg.jpg" alt=""/>
+                </div>
+            </div>
         </div>
-    );
+    )
+
 };
 
 export default ForgotPasswordScreen;

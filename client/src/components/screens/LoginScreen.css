@@ -240,7 +240,6 @@
         margin-top: 20px;
     }
 
-    /* Remove login-picture class on smaller devices (1050px and below) */
     .login-screen .login-picture {
         display: none;
     }
